@@ -12,6 +12,7 @@ makeCacheMatrix <- function(x = matrix()) {
         m <<- NULL ## re-initialize m in the parent environment to null
     }
     get <- function() x 
+    ## add setters and getters for inverse
     setInverse <- function(inverse) m <<- inverse 
     getInverse <- function() m 
     list(set = set, get = get,
@@ -24,8 +25,9 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
     inverse <- x$getInverse()
     if(!is.null(inverse)) {
-        return(inverse)
+        return(inverse) ## if found inverse, return it
     }
+    ## else calculate inverse and cache it
     matrix <- x$get()
     inverse <- solve(matrix)
     x$setInverse(inverse)
